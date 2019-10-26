@@ -106,4 +106,16 @@ public extension UITextField {
         return self
     }
 
+    @discardableResult
+    func isSecureTextEntry(_ isSecureTextEntry: Bool) -> Self {
+        self.isSecureTextEntry = isSecureTextEntry
+        return self
+    }
+
+    @discardableResult
+    func textContentType(_ type: UITextContentType) -> Self {
+        self.textContentType = type
+        return self
+    }
+
 }

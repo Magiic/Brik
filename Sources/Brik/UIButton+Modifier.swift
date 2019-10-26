@@ -58,4 +58,10 @@ public extension UIButton {
         return self
     }
 
+    @discardableResult
+    func attributedTitle(_ attr: NSAttributedString?, state: UIControl.State = []) -> Self {
+        self.setAttributedTitle(attr, for: state)
+        return self
+    }
+
 }
