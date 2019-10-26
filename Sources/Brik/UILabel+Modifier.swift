@@ -23,6 +23,12 @@ public extension UILabel {
     }
 
     @discardableResult
+    func setTintColor(_ color: UIColor) -> Self {
+        self.tintColor = color
+        return self
+    }
+
+    @discardableResult
     func lines(_ numberOfLines: Int) -> Self {
         self.numberOfLines = numberOfLines
         return self
@@ -31,6 +37,31 @@ public extension UILabel {
     @discardableResult
     func setTextAlignment(_ textAlignment: NSTextAlignment) -> Self {
         self.textAlignment = textAlignment
+        return self
+    }
+
+    @discardableResult
+    func setFont(_ font: UIFont) -> Self {
+        self.font = font
+        return self
+    }
+
+    @discardableResult
+    func isEnabled(_ isEnabled: Bool, alpha: CGFloat = 1.0) -> Self {
+        self.isEnabled = isEnabled
+        self.alpha = alpha
+        return self
+    }
+
+    @discardableResult
+    func setAttributedText(_ attr: NSAttributedString) -> Self {
+        self.attributedText = attr
+        return self
+    }
+
+    @discardableResult
+    func setAdjustsFontSizeToFitWidth(_ adjustFontSize: Bool) -> Self {
+        self.adjustsFontSizeToFitWidth = adjustFontSize
         return self
     }
 }

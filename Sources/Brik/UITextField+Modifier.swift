@@ -28,4 +28,82 @@ public extension UITextField {
         return self
     }
 
+    @discardableResult
+    func setFont(_ font: UIFont) -> Self {
+        self.font = font
+        return self
+    }
+
+    @discardableResult
+    func setAttributedText(_ attr: NSAttributedString) -> Self {
+        self.attributedText = attr
+        return self
+    }
+
+    @discardableResult
+    func setAttributedPlaceholder(_ attr: NSAttributedString) -> Self {
+        self.attributedPlaceholder = attr
+        return self
+    }
+
+    @discardableResult
+    func setTextAlignment(_ textAlignment: NSTextAlignment) -> Self {
+        self.textAlignment = textAlignment
+        return self
+    }
+
+    @discardableResult
+    func borderStyle(_ borderStyle: UITextField.BorderStyle) -> Self {
+        self.borderStyle = borderStyle
+        return self
+    }
+
+    @discardableResult
+    func setRightView(_ rightView: UIView?) -> Self {
+        self.rightView = rightView
+        return self
+    }
+
+    @discardableResult
+    func setLeftView(_ leftView: UIView?) -> Self {
+        self.leftView = leftView
+        return self
+    }
+
+    @discardableResult
+    func setInputView(_ inputView: UIView?) -> Self {
+        self.inputView = inputView
+        return self
+    }
+
+    @discardableResult
+    func setInputAccessoryView(_ inputAccessoryView: UIView?) -> Self {
+        self.inputAccessoryView = inputAccessoryView
+        return self
+    }
+
+    @discardableResult
+    func setClearOnBeginEditing(_ clear: Bool) -> Self {
+        self.clearsOnBeginEditing = clear
+        return self
+    }
+
+    @discardableResult
+    func setMinimumFontSize(_ fontSize: CGFloat) -> Self {
+        self.minimumFontSize = fontSize
+        return self
+    }
+
+    @discardableResult
+    func setAdjustsFontSizeToFitWidth(_ adjustFontSize: Bool) -> Self {
+        self.adjustsFontSizeToFitWidth = adjustFontSize
+        return self
+    }
+
+    @discardableResult
+    func delegate(_ delegate: UITextFieldDelegate) -> Self {
+        self.delegate = delegate
+        return self
+    }
+
 }
