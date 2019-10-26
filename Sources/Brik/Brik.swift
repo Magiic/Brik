@@ -46,7 +46,6 @@ public class Brik: UIView, BrikTrackable {
     private var onTapped: (() -> Void)?
     private var trackedGestures: [Brik.Gesture] = []
     private var trackedControlActions: [ControlAction] = []
-    var customConstraints: [NSLayoutConstraint] = []
 
     public enum GestureType {
         case tap, longPress, pinch

@@ -31,17 +31,4 @@ public extension Brik {
         self.constraints(constraints, view: view)
         return self
     }
-
-    @discardableResult
-    func addConstraint(_ constraint: (Brik, [UIView]) -> NSLayoutConstraint, identifier: String) -> Self {
-        let cons = constraint(self, container.subviews)
-        cons.identifier = identifier
-        customConstraints.append(cons)
-        return self
-    }
-
-    func constraint(identifier: String, _ block: (NSLayoutConstraint?) -> Void) -> Self {
-        block(customConstraints.first(where: {$0.identifier == identifier}))
-        return self
-    }
 }
