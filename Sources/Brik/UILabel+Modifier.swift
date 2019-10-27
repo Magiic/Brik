@@ -11,19 +11,19 @@ import UIKit
 public extension UILabel {
 
     @discardableResult
-    func setText(_ text: String) -> Self {
+    func text(_ text: String) -> Self {
         self.text = text
         return self
     }
 
     @discardableResult
-    func setColor(_ color: UIColor) -> Self {
+    func color(_ color: UIColor) -> Self {
         self.textColor = color
         return self
     }
 
     @discardableResult
-    func setTintColor(_ color: UIColor) -> Self {
+    func tintColor(_ color: UIColor) -> Self {
         self.tintColor = color
         return self
     }
@@ -35,13 +35,13 @@ public extension UILabel {
     }
 
     @discardableResult
-    func setTextAlignment(_ textAlignment: NSTextAlignment) -> Self {
+    func textAlignment(_ textAlignment: NSTextAlignment) -> Self {
         self.textAlignment = textAlignment
         return self
     }
 
     @discardableResult
-    func setFont(_ font: UIFont) -> Self {
+    func font(_ font: UIFont) -> Self {
         self.font = font
         return self
     }
@@ -54,13 +54,13 @@ public extension UILabel {
     }
 
     @discardableResult
-    func setAttributedText(_ attr: NSAttributedString) -> Self {
+    func attributedText(_ attr: NSAttributedString) -> Self {
         self.attributedText = attr
         return self
     }
 
     @discardableResult
-    func setAdjustsFontSizeToFitWidth(_ adjustFontSize: Bool) -> Self {
+    func adjustsFontSizeToFitWidth(_ adjustFontSize: Bool) -> Self {
         self.adjustsFontSizeToFitWidth = adjustFontSize
         return self
     }

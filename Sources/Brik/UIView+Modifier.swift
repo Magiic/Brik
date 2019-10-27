@@ -15,13 +15,13 @@ public extension UIView {
     }
 
     @discardableResult
-    func setTag(_ tag: Int) -> Self {
+    func tag(_ tag: Int) -> Self {
         self.tag = tag
         return self
     }
 
     @discardableResult
-    func setHidden(_ hidden: Bool) -> Self {
+    func hidden(_ hidden: Bool) -> Self {
         self.isHidden = hidden
         return self
     }
