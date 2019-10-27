@@ -73,6 +73,20 @@ public class Brik: UIView, BrikTrackable {
         }
     }
 
+    /**
+     Initialize the brick with 2 or more `UIView` and `Brik`.
+     - Parameter content: Content
+     - Example of building a brick
+        ````
+        Brik { container in
+            UILabel()
+                .text("Hello")
+
+            UITextField()
+                .placeholder("Enter a name")
+        }
+        ````
+     */
     public init(@BrikBuilder _ content: (Brik) -> UIView) {
         super.init(frame: .zero)
         self.container = content(self)
@@ -107,11 +121,15 @@ public class Brik: UIView, BrikTrackable {
 
     // MARK: - Tracking
 
+    /// Called when the brick is moving to window.
+    /// - Parameter tracking: Block  to execute when the brick appear.
     public func onAppear(_ tracking: @escaping (() -> Void)) -> Self {
         self.trackingOnAppear = tracking
         return self
     }
 
+    /// Called when the brick moving out from window.
+    /// - Parameter tracking: Block  to execute when the brick disappear.
     public func onDisappear(_ tracking: @escaping (() -> Void)) -> Self {
         self.trackingOnDisappear = tracking
         return self
@@ -119,6 +137,8 @@ public class Brik: UIView, BrikTrackable {
 
     // MARK: - Touch
 
+    /// Called when a touches in the brick began.
+    /// - Parameter tapped: Block to execute when touches began.
     public func onTap(_ tapped: @escaping () -> Void) -> Self {
         self.onTapped = tapped
         return self
@@ -126,6 +146,10 @@ public class Brik: UIView, BrikTrackable {
 
     // MARK: - Gesture
 
+    /// Apply gesture on specified view
+    /// - Parameter gesture: Type of gesture to apply. All of them are not yet integrated.
+    /// - Parameter targetTag: The target tag view to apply gesture.
+    /// - Parameter run: Block of code to execute when gesture is detected.
     @discardableResult
     public func gesture(_ gesture: Brik.GestureType, onTagView targetTag: Int, run: @escaping (Brik, UIView, UIGestureRecognizer) -> Void) -> Self {
         guard let viewForGesture = subviews.first?.subviews.view(with: targetTag) else { return self }
@@ -168,6 +192,10 @@ public class Brik: UIView, BrikTrackable {
 
     // MARK: - Target UIControl
 
+    /// Action to execute for any UIControl. Use this method to execute a target action for a control.
+    /// - Parameter targetTag: The target tag view to apply gesture.
+    /// - Parameter event: A bitmask specifying the control-specific events for which the action method is called. Always specify at least one constant.
+    /// - Parameter run: Block of code to execute when event is triggered.
     @discardableResult
     public func action(onTagView targetTag: Int, event: UIControl.Event = .touchUpInside, _ run: @escaping (UIControl) -> Void) -> Self {
         guard let control = self[targetTag] as? UIControl else { return self }
@@ -192,6 +220,20 @@ public class Brik: UIView, BrikTrackable {
 }
 
 public class VBrik: Brik {
+    /**
+    Initialize the brick with 2 or more `UIView` and `Brik`.
+    - Parameter content: Content
+    - Example of building a brick
+       ````
+       VBrik(alignment: .center) { container in
+           UILabel()
+               .text("Hello")
+
+           UITextField()
+               .placeholder("Enter a name")
+       }
+       ````
+    */
     public override init(@VBrikBuilder _ content: (Brik) -> UIView) {
         super.init(content)
         if let vStack = container as? UIStackView {
@@ -206,6 +248,20 @@ public class VBrik: Brik {
 }
 
 public class HBrik: Brik {
+    /**
+    Initialize the brick with 2 or more `UIView` and `Brik`.
+    - Parameter content: Content
+    - Example of building a brick
+       ````
+       HBrik(alignment: .bottom) { container in
+           UILabel()
+               .text("Hello")
+
+           UITextField()
+               .placeholder("Enter a name")
+       }
+       ````
+    */
     public override init(@HBrikBuilder _ content: (Brik) -> UIView) {
         super.init(content)
         if let vStack = container as? UIStackView {
