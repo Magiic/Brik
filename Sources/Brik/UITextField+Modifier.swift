@@ -11,43 +11,43 @@ import UIKit
 public extension UITextField {
 
     @discardableResult
-    func setPlaceholder(_ placeholder: String) -> Self {
+    func placeholder(_ placeholder: String) -> Self {
         self.placeholder = placeholder
         return self
     }
 
     @discardableResult
-    func setText(_ text: String) -> Self {
+    func text(_ text: String) -> Self {
         self.text = text
         return self
     }
 
     @discardableResult
-    func setColor(_ color: UIColor) -> Self {
+    func color(_ color: UIColor) -> Self {
         self.textColor = color
         return self
     }
 
     @discardableResult
-    func setFont(_ font: UIFont) -> Self {
+    func font(_ font: UIFont) -> Self {
         self.font = font
         return self
     }
 
     @discardableResult
-    func setAttributedText(_ attr: NSAttributedString) -> Self {
+    func attributedText(_ attr: NSAttributedString) -> Self {
         self.attributedText = attr
         return self
     }
 
     @discardableResult
-    func setAttributedPlaceholder(_ attr: NSAttributedString) -> Self {
+    func attributedPlaceholder(_ attr: NSAttributedString) -> Self {
         self.attributedPlaceholder = attr
         return self
     }
 
     @discardableResult
-    func setTextAlignment(_ textAlignment: NSTextAlignment) -> Self {
+    func textAlignment(_ textAlignment: NSTextAlignment) -> Self {
         self.textAlignment = textAlignment
         return self
     }
@@ -59,43 +59,43 @@ public extension UITextField {
     }
 
     @discardableResult
-    func setRightView(_ rightView: UIView?) -> Self {
+    func rightView(_ rightView: UIView?) -> Self {
         self.rightView = rightView
         return self
     }
 
     @discardableResult
-    func setLeftView(_ leftView: UIView?) -> Self {
+    func leftView(_ leftView: UIView?) -> Self {
         self.leftView = leftView
         return self
     }
 
     @discardableResult
-    func setInputView(_ inputView: UIView?) -> Self {
+    func inputView(_ inputView: UIView?) -> Self {
         self.inputView = inputView
         return self
     }
 
     @discardableResult
-    func setInputAccessoryView(_ inputAccessoryView: UIView?) -> Self {
+    func inputAccessoryView(_ inputAccessoryView: UIView?) -> Self {
         self.inputAccessoryView = inputAccessoryView
         return self
     }
 
     @discardableResult
-    func setClearOnBeginEditing(_ clear: Bool) -> Self {
+    func clearOnBeginEditing(_ clear: Bool) -> Self {
         self.clearsOnBeginEditing = clear
         return self
     }
 
     @discardableResult
-    func setMinimumFontSize(_ fontSize: CGFloat) -> Self {
+    func minimumFontSize(_ fontSize: CGFloat) -> Self {
         self.minimumFontSize = fontSize
         return self
     }
 
     @discardableResult
-    func setAdjustsFontSizeToFitWidth(_ adjustFontSize: Bool) -> Self {
+    func adjustsFontSizeToFitWidth(_ adjustFontSize: Bool) -> Self {
         self.adjustsFontSizeToFitWidth = adjustFontSize
         return self
     }

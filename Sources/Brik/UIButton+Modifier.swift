@@ -11,31 +11,31 @@ import UIKit
 public extension UIButton {
 
     @discardableResult
-    func setTitle(_ title: String) -> Self {
+    func title(_ title: String) -> Self {
         self.setTitle(title, for: [])
         return self
     }
 
     @discardableResult
-    func setColor(_ color: UIColor) -> Self {
+    func color(_ color: UIColor) -> Self {
         self.setTitleColor(color, for: [])
         return self
     }
 
     @discardableResult
-    func setTintColor(_ color: UIColor) -> Self {
+    func tintColor(_ color: UIColor) -> Self {
         self.tintColor = color
         return self
     }
 
     @discardableResult
-    func setImage(_ image: UIImage?, state: UIControl.State = []) -> Self {
+    func image(_ image: UIImage?, state: UIControl.State = []) -> Self {
         self.setImage(image, for: state)
         return self
     }
 
     @discardableResult
-    func setBackgroundImage(_ image: UIImage?, state: UIControl.State = []) -> Self {
+    func backgroundImage(_ image: UIImage?, state: UIControl.State = []) -> Self {
         self.setBackgroundImage(image, for: state)
         return self
     }

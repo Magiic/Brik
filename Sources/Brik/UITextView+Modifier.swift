@@ -11,31 +11,31 @@ import UIKit
 public extension UITextView {
 
     @discardableResult
-    func setText(_ text: String) -> Self {
+    func text(_ text: String) -> Self {
         self.text = text
         return self
     }
 
     @discardableResult
-    func setColor(_ color: UIColor) -> Self {
+    func color(_ color: UIColor) -> Self {
         self.textColor = color
         return self
     }
 
     @discardableResult
-    func setTintColor(_ color: UIColor) -> Self {
+    func tintColor(_ color: UIColor) -> Self {
         self.tintColor = color
         return self
     }
 
     @discardableResult
-    func setTextAlignment(_ textAlignment: NSTextAlignment) -> Self {
+    func textAlignment(_ textAlignment: NSTextAlignment) -> Self {
         self.textAlignment = textAlignment
         return self
     }
 
     @discardableResult
-    func setFont(_ font: UIFont) -> Self {
+    func font(_ font: UIFont) -> Self {
         self.font = font
         return self
     }
@@ -61,13 +61,13 @@ public extension UITextView {
     }
 
     @discardableResult
-    func setAttributedText(_ attr: NSAttributedString) -> Self {
+    func attributedText(_ attr: NSAttributedString) -> Self {
         self.attributedText = attr
         return self
     }
 
     @discardableResult
-    func setLinkAttributes(_ attr: [NSAttributedString.Key : Any]) -> Self {
+    func linkAttributes(_ attr: [NSAttributedString.Key : Any]) -> Self {
         self.linkTextAttributes = attr
         return self
     }
@@ -79,13 +79,13 @@ public extension UITextView {
     }
 
     @discardableResult
-    func setInputView(_ inputView: UIView?) -> Self {
+    func inputView(_ inputView: UIView?) -> Self {
         self.inputView = inputView
         return self
     }
 
     @discardableResult
-    func setInputAccessoryView(_ inputAccessoryView: UIView?) -> Self {
+    func inputAccessoryView(_ inputAccessoryView: UIView?) -> Self {
         self.inputAccessoryView = inputAccessoryView
         return self
     }

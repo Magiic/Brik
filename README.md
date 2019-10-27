@@ -5,13 +5,13 @@ A declarative and simple way to build user interfaces with UIKit and the power o
 ```swift
 VBrik { _ in
     UILabel()
-        .setText("Username")
-        .setFont(.preferredFont(forTextStyle: .headline))
-        .setColor(.black)
-        .setTextAlignment(.center)
+        .text("Username")
+        .font(.preferredFont(forTextStyle: .headline))
+        .color(.black)
+        .textAlignment(.center)
 
     UITextField()
-        .setPlaceholder("Enter an email")
+        .placeholder("Enter an email")
 }
 .add(in: self.view, constraints: .center)
 ```
@@ -35,7 +35,7 @@ The Swift Package Manager is a tool for automating the distribution of Swift cod
 
 ```
 dependencies: [
-    .package(url: "https://github.com/Magiic/Brik", from: "1.0.0")
+    .package(url: "https://github.com/Magiic/Brik", from: "0.0.9")
 ]
 ```
 
@@ -50,22 +50,22 @@ Here a simple example to build a login form and add it to the view controller.
 ```swift
 VBrik(spacing: 10) { _ in
 	UILabel()
-	    .setText("Username")
-	    .setFont(.preferredFont(forTextStyle: .headline))
-	    .setColor(.black)
-	    .setTextAlignment(.center)
+	    .text("Username")
+	    .font(.preferredFont(forTextStyle: .headline))
+	    .color(.black)
+	    .textAlignment(.center)
 	
 	UITextField()
-	    .setPlaceholder("Enter an email")
+	    .placeholder("Enter an email")
 	
 	UITextField()
-	    .setPlaceholder("Enter an password")
+	    .placeholder("Enter an password")
 	    .isSecureTextEntry(true)
 	
 	UIButton()
-	    .setTag(1)
-	    .setTitle("Login")
-	    .setColor(.white)
+	    .tag(1)
+	    .title("Login")
+	    .color(.white)
 	    .backgroundColor(.red)
 }
 .add(in: self.view, constraints: .center)
@@ -82,13 +82,13 @@ Here a simple example to build a label with a textfield.
 ```swift
 HBrik(alignment: .bottom, spacing: 25) { _ in
     UILabel()
-        .setText("Name:")
-        .setFont(.preferredFont(forTextStyle: .title2))
-        .setColor(.black)
+        .text("Name:")
+        .font(.preferredFont(forTextStyle: .title2))
+        .color(.black)
         .lines(1)
 
     UITextField()
-        .setPlaceholder("Enter a name")
+        .placeholder("Enter a name")
 }
 ```
 
@@ -98,24 +98,24 @@ This is the brick you use if you need a more complex layout where you have to wo
 ```swift
 let brickA = VBrik(spacing: 10) { _ in
     UILabel()
-        .setText("Username")
-        .setFont(.preferredFont(forTextStyle: .headline))
-        .setColor(.black)
-        .setTextAlignment(.center)
+        .text("Username")
+        .font(.preferredFont(forTextStyle: .headline))
+        .color(.black)
+        .textAlignment(.center)
 
     UITextField()
-        .setPlaceholder("Enter an email")
+        .placeholder("Enter an email")
 
     UITextField()
-        .setPlaceholder("Enter an password")
+        .placeholder("Enter an password")
         .isSecureTextEntry(true)
 
 }
 
 let brickB = HBrik(spacing: 20) { _ in
     UIButton()
-        .setTitle("Sign in")
-        .setColor(.red)
+        .title("Sign in")
+        .color(.red)
 
     UIButton()
         .attributedTitle(
@@ -127,8 +127,8 @@ let brickB = HBrik(spacing: 20) { _ in
 }
 
 Brik { _ in
-    brickA.setTag(1)
-    brickB.setTag(2)
+    brickA.tag(1)
+    brickB.tag(2)
 }
 .constraints({ (brick, _) in
     brick[1].topAnchor.constraint(equalTo: brick.topAnchor)
@@ -161,11 +161,11 @@ struct StyleSheet {
 
 VBrik(spacing: 10) { _ in
     UILabel()
-        .setText("Username")
+        .text("Username")
         .apply(StyleSheet.abc)
 
     UITextField()
-        .setPlaceholder("Enter an email")
+        .placeholder("Enter an email")
 
 }
 ```
@@ -212,8 +212,8 @@ With the above function, you can set the constraints for the brick and his subvi
 
 ```swift
 Brik { _ in
-    brickA.setTag(1)
-    brickB.setTag(2)
+    brickA.tag(1)
+    brickB.tag(2)
 }
 .constraints({ (brick, _) in
     brick[1].topAnchor.constraint(equalTo: brick.topAnchor)
@@ -236,14 +236,14 @@ You can add a target action to a control like below:
 ```swift
 let brickA = VBrik(spacing: 10) { _ in
     UILabel()
-        .setText("Username")
-        .setFont(.preferredFont(forTextStyle: .headline))
-        .setColor(.black)
-        .setTextAlignment(.center)
+        .text("Username")
+        .font(.preferredFont(forTextStyle: .headline))
+        .color(.black)
+        .textAlignment(.center)
 
     UITextField()
-        .setTag(2)
-        .setPlaceholder("Enter an email")
+        .tag(2)
+        .placeholder("Enter an email")
 
 }
 
@@ -251,13 +251,13 @@ let brickB = HBrik(spacing: 20) { ... }
 
 Brik { container in
     brickA
-        .setTag(1)
+        .tag(1)
         .action(onTagView: 2, event: .editingChanged) { control in
             // These 2 following lines are similar
             print(control[UITextField.self]?.text)
             print(container[1, Brik.self][2, UITextField.self].text)
         }
-    brickB.setTag(2)
+    brickB.tag(2)
 }
 ```
 
