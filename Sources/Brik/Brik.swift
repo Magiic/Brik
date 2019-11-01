@@ -31,6 +31,22 @@ public class Brik: UIView, BrikTrackable {
         childs.view(with: tag, class: C.self)
     }
 
+    public subscript(childName: String) -> UIView {
+        guard let child = container.allChilds().first(where: {$0.accessibilityIdentifier == childName}) else {
+            fatalError("Cannot find child with accessibility identifier \(childName)")
+        }
+
+        return child
+    }
+
+    public subscript<C>(childName: String, class: C.Type) -> C where C: UIView {
+        guard let child = container.allChilds().first(where: {$0.accessibilityIdentifier == childName}), let childAsType = child as? C else {
+            fatalError("Cannot find child with accessibility identifier \(childName)")
+        }
+
+        return childAsType
+    }
+
     // MARK: Brik Trackable
 
     public var trackingOnAppear: (() -> Void)? = nil
@@ -63,7 +79,7 @@ public class Brik: UIView, BrikTrackable {
         }
     }
 
-    public final class ControlAction {
+    final class ControlAction {
         let view: UIView
         let action: () -> Void
 
@@ -180,6 +196,40 @@ public class Brik: UIView, BrikTrackable {
         return self
     }
 
+    /// Apply gesture on specified view with accessibility identifier
+    /// - Parameter gesture: Type of gesture to apply. All of them are not yet integrated.
+    /// - Parameter onChild: The target accessibility identifier view to apply gesture.
+    /// - Parameter run: Block of code to execute when gesture is detected.
+    @discardableResult
+    public func gesture(_ gesture: Brik.GestureType, onChild child: String, run: @escaping (Brik, UIView, UIGestureRecognizer) -> Void) -> Self {
+        guard let viewForGesture = container
+            .allChilds()
+            .first(where: {$0.accessibilityIdentifier == child})
+            else { return self }
+
+        let gestureSelected: UIGestureRecognizer
+        switch gesture {
+        case .tap:
+            gestureSelected = UITapGestureRecognizer(target: self, action: #selector(handleGestureEvent(gesture:)))
+        case .longPress:
+            gestureSelected = UILongPressGestureRecognizer(target: self, action: #selector(handleGestureEvent(gesture:)))
+        case .pinch:
+            gestureSelected = UIPinchGestureRecognizer(target: self, action: #selector(handleGestureEvent(gesture:)))
+        }
+
+        gestureSelected.name = UUID().uuidString
+
+        viewForGesture.isUserInteractionEnabled = true
+        viewForGesture.addGestureRecognizer(gestureSelected)
+
+        trackedGestures.append(Brik.Gesture(view: viewForGesture, gesture: gestureSelected, action: { [weak self] in
+            guard let self = self else { return }
+            run(self, viewForGesture, gestureSelected)
+        }))
+
+        return self
+    }
+
     @objc
     fileprivate func handleGestureEvent(gesture: UIGestureRecognizer) {
         guard let view = gesture.view else { return }
@@ -194,16 +244,78 @@ public class Brik: UIView, BrikTrackable {
 
     /// Action to execute for any UIControl. Use this method to execute a target action for a control.
     /// - Parameter targetTag: The target tag view to apply gesture.
-    /// - Parameter event: A bitmask specifying the control-specific events for which the action method is called. Always specify at least one constant.
+    /// - Parameter event: A bitmask specifying the control-specific events for which the action method is called. Always specify at least one constant. Default touchUpInside.
     /// - Parameter run: Block of code to execute when event is triggered.
     @discardableResult
-    public func action(onTagView targetTag: Int, event: UIControl.Event = .touchUpInside, _ run: @escaping (UIControl) -> Void) -> Self {
+    public func action(onTagView targetTag: Int, event: UIControl.Event = .touchUpInside, _ run: @escaping (Brik, UIControl) -> Void) -> Self {
         guard let control = self[targetTag] as? UIControl else { return self }
 
         control.addTarget(self, action: #selector(handleControlAction(sender:)), for: event)
 
+        trackedControlActions.append(ControlAction(view: control, action: { [unowned self] in
+            run(self, control)
+        }))
+
+        return self
+    }
+
+    /// Action to execute for any UIControl. Use this method to execute a target action for a control.
+    /// - Parameter onChild: The target accessibility identifier view to apply gesture.
+    /// - Parameter event: A bitmask specifying the control-specific events for which the action method is called. Always specify at least one constant. Default touchUpInside.
+    /// - Parameter run: Block of code to execute when event is triggered.
+    @discardableResult
+    public func action(onChild child: String, event: UIControl.Event = .touchUpInside, _ run: @escaping (Brik, UIControl) -> Void) -> Self {
+        guard
+            let control = container
+                .allChilds()
+                .first(where: {$0.accessibilityIdentifier == child}) as? UIControl
+            else { return self }
+
+        control.addTarget(self, action: #selector(handleControlAction(sender:)), for: event)
+
+        trackedControlActions.append(ControlAction(view: control, action: { [unowned self] in
+            run(self, control)
+        }))
+
+        return self
+    }
+
+    /// Observe editing changed in UITextField to execute a specified code.
+    /// - Parameters:
+    ///   - targetTag: The target tag view to apply gesture. It should be a UITextField control.
+    ///   - run: Block of code to execute when event is triggered.
+    @discardableResult
+    public func editingChanged(
+        onTagView targetTag: Int,
+        run: @escaping (Brik) -> Void) -> Self {
+
+        guard let control = self[targetTag] as? UITextField else { return self }
+        control.addTarget(self, action: #selector(handleControlAction(sender:)), for: .editingChanged)
+
         trackedControlActions.append(ControlAction(view: control, action: {
-            run(control)
+            run(self)
+        }))
+
+        return self
+    }
+
+    /// Observe editing changed in UITextField to execute a specified code.
+    /// - Parameters:
+    ///   - onChild: The target accessibility identifier view to apply gesture. It should be a UITextField control.
+    ///   - run: Block of code to execute when event is triggered.
+    @discardableResult
+    public func editingChanged(
+        onChild child: String,
+        run: @escaping (Brik) -> Void) -> Self {
+
+        guard let control = container
+            .allChilds()
+            .first(where: {$0.accessibilityIdentifier == child}) as? UITextField
+            else { return self }
+        control.addTarget(self, action: #selector(handleControlAction(sender:)), for: .editingChanged)
+
+        trackedControlActions.append(ControlAction(view: control, action: { [unowned self] in
+            run(self)
         }))
 
         return self
@@ -245,6 +357,13 @@ public class VBrik: Brik {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    @discardableResult
+    public func customSpacing(spacing: CGFloat, after tag: Int) -> Self {
+        guard let vStack = container as? UIStackView else { return self }
+        vStack.setCustomSpacing(spacing, after:  self[tag])
+        return self
+    }
 }
 
 public class HBrik: Brik {
@@ -272,5 +391,12 @@ public class HBrik: Brik {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @discardableResult
+    public func customSpacing(spacing: CGFloat, after tag: Int) -> Self {
+        guard let hStack = container as? UIStackView else { return self }
+        hStack.setCustomSpacing(spacing, after:  self[tag])
+        return self
     }
 }

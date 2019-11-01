@@ -10,10 +10,6 @@ import UIKit
 
 public extension UIView {
 
-    subscript<C>(class: C.Type) -> C? where C: UIView {
-        self as? C
-    }
-
     @discardableResult
     func tag(_ tag: Int) -> Self {
         self.tag = tag
@@ -29,6 +25,17 @@ public extension UIView {
     @discardableResult
     func backgroundColor(_ color: UIColor) -> Self {
         self.backgroundColor = color
+        return self
+    }
+
+    @discardableResult
+    func accessibilityIdentifier(_ identifier: String? = nil) -> Self {
+        if let id = identifier {
+            self.accessibilityIdentifier = id
+        } else {
+            self.accessibilityIdentifier = String(describing: type(of: self))
+        }
+
         return self
     }
 }
