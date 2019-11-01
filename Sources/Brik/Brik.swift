@@ -67,7 +67,7 @@ public class Brik: UIView, BrikTrackable {
         case tap, longPress, pinch
     }
 
-    public final class Gesture {
+    final class Gesture {
         let view: UIView
         let gesture: UIGestureRecognizer
         let action: () -> Void
