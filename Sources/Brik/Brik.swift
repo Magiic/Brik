@@ -107,6 +107,7 @@ public class Brik: UIView, BrikTrackable {
         super.init(frame: .zero)
         self.container = content(self)
         addSubview(self.container)
+        self.container.accessibilityIdentifier("brik_container_id")
         self.container.translatesAutoresizingMaskIntoConstraints = false
         self.translatesAutoresizingMaskIntoConstraints = false
 
@@ -317,6 +318,22 @@ public class Brik: UIView, BrikTrackable {
         trackedControlActions.append(ControlAction(view: control, action: { [unowned self] in
             run(self)
         }))
+
+        return self
+    }
+
+    /// Find a UIView child with corresponding name on the hierarchy of the brik and execute the specified block code.
+    /// - Parameter childName: Name of the child.
+    /// - Parameter class: Class type of the child specified in argument.
+    /// - Parameter run: Block of code to execute.
+    @discardableResult
+    public func child<T>(childName: String, class: T.Type, _ run: @escaping (T) -> Void) -> Self where T: UIView {
+        guard let control = container
+            .allChilds()
+            .first(where: {$0.accessibilityIdentifier == childName}) as? T
+            else { return self }
+
+        run(control)
 
         return self
     }

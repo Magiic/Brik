@@ -23,4 +23,15 @@ public extension UIView {
 
         return array
     }
+
+    func allChildsAdded() -> [UIView] {
+        var array = [UIView]()
+
+        for subview in self.subviews {
+            array.append(subview)
+            array += subview.allChilds()
+        }
+
+        return array.filter({$0.accessibilityIdentifier != "brik_container_id"})
+    }
 }
