@@ -12,6 +12,10 @@ public enum LayoutBaseType {
     case pinToEdge
     case pinToEdgePadding(CGFloat)
     case pinToEdgeInsets(UIEdgeInsets)
+    case pinToUp
+    case pinToUpInsets(UIEdgeInsets)
+    case pinToBottom
+    case pinToBottomInsets(UIEdgeInsets)
     case center
     case centerPadding(CGFloat)
     case centerInsets(UIEdgeInsets)
@@ -94,6 +98,34 @@ public extension UIView {
             const = self.pinToEdgeConstraints(view, edgeInsets: .init(top: padding, left: padding, bottom: padding, right: padding))
         case .pinToEdgeInsets(let edgeInsets):
             const = self.pinToEdgeConstraints(view, edgeInsets: edgeInsets)
+        case .pinToUp:
+            const = [
+                self.topAnchor.constraint(equalTo: view.topAnchor),
+                self.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                self.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                self.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor)
+            ]
+        case .pinToUpInsets(let edgeInsets):
+            const = [
+                self.topAnchor.constraint(equalTo: view.topAnchor, constant: edgeInsets.top),
+                self.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: edgeInsets.left),
+                self.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -edgeInsets.right),
+                self.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -edgeInsets.bottom)
+            ]
+        case .pinToBottom:
+            const = [
+                self.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor),
+                self.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                self.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                self.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ]
+        case .pinToBottomInsets(let edgeInsets):
+            const = [
+                self.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: edgeInsets.top),
+                self.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: edgeInsets.left),
+                self.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -edgeInsets.right),
+                self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -edgeInsets.bottom)
+            ]
         case .center:
             const = self.centerConstraints(to: view)
         case .centerPadding(let padding):
