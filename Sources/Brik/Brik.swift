@@ -341,7 +341,7 @@ public class Brik: UIView, BrikTrackable {
     @objc
     fileprivate func handleControlAction(sender: UIControl) {
         guard let firstControl = trackedControlActions.first(where: {
-            $0.view.tag == sender.tag
+            $0.view === sender
         }) else { return }
 
         firstControl.action()
