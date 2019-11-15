@@ -338,6 +338,27 @@ public class Brik: UIView, BrikTrackable {
         return self
     }
 
+    /// Find all UIView childs corresponding to specified name on the hierarchy of the brik and execute the specified block code.
+    /// - Parameter childName: Name of the child.
+    /// - Parameter class: Class type of the child specified in argument.
+    /// - Parameter run: Block of code to execute.
+    @discardableResult
+    public func childs<T>(childName: String, class: T.Type, _ run: @escaping ([T]) -> Void) -> Self where T: UIView {
+        let controls = container
+        .allChilds()
+        .compactMap({ $0 as? T })
+
+        run(controls)
+
+        return self
+    }
+
+    /// Specifies if the child name exists in the container of lego
+    /// - Parameter childName: The name of the uiview
+    public func isChildNameExists(_ childName: String) -> Bool {
+        container.allChilds().first(where: { $0.accessibilityIdentifier == childName }) != nil
+    }
+
     @objc
     fileprivate func handleControlAction(sender: UIControl) {
         guard let firstControl = trackedControlActions.first(where: {

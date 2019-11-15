@@ -10,7 +10,9 @@ import UIKit
 
 @_functionBuilder
 public struct VBrikBuilder {
-    public static func buildBlock(_ views: UIView...) -> UIView {
+    public typealias Component = UIView
+
+    public static func buildBlock(_ views: Component...) -> Component {
         views.forEach({ $0.translatesAutoresizingMaskIntoConstraints = false })
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = .vertical
@@ -21,11 +23,25 @@ public struct VBrikBuilder {
 
         return stackView
     }
+
+    static func buildIf(_ children: Component?) -> Component {
+        if let child = children {
+            child.translatesAutoresizingMaskIntoConstraints = false
+            return child
+        } else {
+            let v = UIView(frame: .zero)
+            v.accessibilityIdentifier = "_fbuilder_empty"
+            v.translatesAutoresizingMaskIntoConstraints = false
+            return v
+        }
+    }
 }
 
 @_functionBuilder
 public struct HBrikBuilder {
-    public static func buildBlock(_ views: UIView...) -> UIView {
+    public typealias Component = UIView
+
+    public static func buildBlock(_ views: Component...) -> Component {
         views.forEach({ $0.translatesAutoresizingMaskIntoConstraints = false })
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = .horizontal
@@ -36,11 +52,26 @@ public struct HBrikBuilder {
 
         return stackView
     }
+
+    static func buildIf(_ children: Component?) -> Component {
+        if let child = children {
+            child.translatesAutoresizingMaskIntoConstraints = false
+            return child
+        } else {
+            let v = UIView(frame: .zero)
+            v.accessibilityIdentifier = "_fbuilder_empty"
+            v.translatesAutoresizingMaskIntoConstraints = false
+            return v
+        }
+    }
 }
 
 @_functionBuilder
 public struct BrikBuilder {
-    public static func buildBlock(_ views: UIView...) -> UIView {
+
+    public typealias Component = UIView
+
+    public static func buildBlock(_ views: Component...) -> Component {
         let view = UIView(frame: .zero)
         views.forEach({
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -49,6 +80,18 @@ public struct BrikBuilder {
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
+    }
+
+    static func buildIf(_ children: Component?) -> Component {
+        if let child = children {
+            child.translatesAutoresizingMaskIntoConstraints = false
+            return child
+        } else {
+            let v = UIView(frame: .zero)
+            v.accessibilityIdentifier = "_fbuilder_empty"
+            v.translatesAutoresizingMaskIntoConstraints = false
+            return v
+        }
     }
 }
 

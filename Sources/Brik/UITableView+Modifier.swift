@@ -57,4 +57,10 @@ public extension UITableView {
         self.separatorInset = insets
         return self
     }
+
+    @discardableResult
+    func separatorStyle(_ style: UITableViewCell.SeparatorStyle) -> Self {
+        self.separatorStyle = style
+        return self
+    }
 }
