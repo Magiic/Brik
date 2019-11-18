@@ -62,8 +62,8 @@ final class BrikTests: XCTestCase {
                 .accessibilityIdentifier("three")
         }
 
-        XCTAssertEqual(brikBuildIf.allChildsAdded().count, 4)
-        XCTAssertEqual(brikBuildIf.allChilds().count, 5)
+        XCTAssertEqual(brikBuildIf.allChildsAdded().count, 3)
+        XCTAssertEqual(brikBuildIf.allChilds().count, 4)
     }
 
     func testChildFiveNameWithBuildIfBrikNotAppear() {
@@ -116,6 +116,58 @@ final class BrikTests: XCTestCase {
         XCTAssertTrue(brikBuildIf.isChildNameExists("five"))
     }
 
+    func testChildNumberWithBuildIfBrikForHBrik() {
+        let valueBuildIf: Bool = false
+
+        let hBrikBuildIf = HBrik { _ in
+            UILabel()
+                .tag(1)
+                .accessibilityIdentifier("one")
+
+            if valueBuildIf {
+                UILabel()
+                .tag(5)
+                .accessibilityIdentifier("five")
+            }
+
+            UILabel()
+                .tag(2)
+                .accessibilityIdentifier("two")
+            UIButton()
+                .tag(3)
+                .accessibilityIdentifier("three")
+        }
+
+        XCTAssertEqual(hBrikBuildIf.allChildsAdded().count, 3)
+        XCTAssertEqual(hBrikBuildIf.allChilds().count, 4)
+    }
+
+    func testChildNumberWithBuildIfBrikForVBrik() {
+        let valueBuildIf: Bool = false
+
+        let VBrikBuildIf = HBrik { _ in
+            UILabel()
+                .tag(1)
+                .accessibilityIdentifier("one")
+
+            if valueBuildIf {
+                UILabel()
+                .tag(5)
+                .accessibilityIdentifier("five")
+            }
+
+            UILabel()
+                .tag(2)
+                .accessibilityIdentifier("two")
+            UIButton()
+                .tag(3)
+                .accessibilityIdentifier("three")
+        }
+
+        XCTAssertEqual(VBrikBuildIf.allChildsAdded().count, 3)
+        XCTAssertEqual(VBrikBuildIf.allChilds().count, 4)
+    }
+
     static var allTests = [
         ("testChildNumberWithSimpleBrik", testChildNumberWithSimpleBrik),
         ("testGetChildWithTagAndWithSimpleBrik", testGetChildWithTagAndWithSimpleBrik),
@@ -123,6 +175,8 @@ final class BrikTests: XCTestCase {
         ("testChildHasUpdatedTextWithSimpleBrik", testChildHasUpdatedTextWithSimpleBrik),
         ("testChildNumberWithBuildIfBrik", testChildNumberWithBuildIfBrik),
         ("testChildFiveNameWithBuildIfBrikNotAppear", testChildFiveNameWithBuildIfBrikNotAppear),
-        ("testChildFiveNameWithBuildIfBrikAppear", testChildFiveNameWithBuildIfBrikAppear)
+        ("testChildFiveNameWithBuildIfBrikAppear", testChildFiveNameWithBuildIfBrikAppear),
+        ("testChildNumberWithBuildIfBrikForHBrik", testChildNumberWithBuildIfBrikForHBrik),
+        ("testChildNumberWithBuildIfBrikForVBrik", testChildNumberWithBuildIfBrikForVBrik)
     ]
 }
