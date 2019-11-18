@@ -38,4 +38,16 @@ public extension UIView {
 
         return self
     }
+
+    @discardableResult
+    func isUserInteractionEnabled(_ isEnabled: Bool) -> Self {
+        self.isUserInteractionEnabled = isEnabled
+        return self
+    }
+
+    @discardableResult
+    func toConstraints(_ isEnabled: Bool = true) -> Self {
+        self.translatesAutoresizingMaskIntoConstraints = !isEnabled
+        return self
+    }
 }
